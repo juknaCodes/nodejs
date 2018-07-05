@@ -3,6 +3,10 @@ const path = require('path');
 const hbs = require('hbs');
 const app = express()
 
+hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerHelper('getYear', ()=> {
+  return new Date().getFullYear();
+});
 app.set('view engine', 'hbs');
 
 app.get('/', (req, res) => {
@@ -11,8 +15,7 @@ app.get('/', (req, res) => {
 
 app.get("/help", (req, res)=> {
   res.render("about.hbs", {
-    pageTitle : "About Page",
-    year: new Date().getFullYear()
+    pageTitle : "About Page"
   })
 })
 
