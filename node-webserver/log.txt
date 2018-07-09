@@ -1,2 +1,0 @@
-Mon Jul 09 2018 16:12:11 GMT+0530 (India Standard Time): request path is /
-Mon Jul 09 2018 16:12:11 GMT+0530 (India Standard Time): request path is /favicon.ico

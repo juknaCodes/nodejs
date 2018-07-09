@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   let log = `${date}: request path is ${req.path}`;
 
   console.log(log);
-  fs.appendFile('log.txt', log + '\n', (err) => {
+  fs.appendFile('server.log', log + '\n', (err) => {
     if (err) throw err;
     console.log('The "data to append" was appended to file!');
   });
@@ -28,22 +28,38 @@ app.use((req, res, next) => {
 // })
 app.set('view engine', 'hbs');
 
-app.get('/', (req, res) => {
-  res.send("Hello World");
-})
+hbs.registerHelper('screamIt', (text) => {
+  return text.toUpperCase();
+});
 
-app.get("/help", (req, res)=> {
-  res.render("about.hbs", {
-    pageTitle : "About Page"
-  })
-})
+app.get('/', (req, res) => {
+  res.render('home.hbs', {
+    pageTitle: 'Home Page',
+    welcomeMessage: 'Welcome to my website'
+  });
+});
+
+app.get('/about', (req, res) => {
+  res.render('about.hbs', {
+    pageTitle: 'About Page'
+  });
+});
+
+// /bad - send back json with errorMessage
+app.get('/bad', (req, res) => {
+  res.send({
+    errorMessage: 'Unable to handle request'
+  });
+});
+
+// /bad - send back json with errorMessage
+app.get('/projects', (req, res) => {
+  res.render('projects.hbs', {
+    pageTitle: 'Projects Page'
+  });
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.get('/bad', (req, res)=> {
-  res.json({
-    errorMessage:"Unable to handle request"
-  });
-})
 
 app.listen(PORT, ()=> {
   console.log(`Server starting at ${PORT}`);

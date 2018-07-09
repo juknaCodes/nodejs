@@ -1,14 +1,14 @@
 {
-  "name": "webserver",
+  "name": "node-webserver",
   "version": "1.0.0",
   "description": "",
   "engines": {
     "node": "10.5.0"
   },
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
