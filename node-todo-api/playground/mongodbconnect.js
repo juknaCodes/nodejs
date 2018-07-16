@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const {MongoClient, ObjectID} = require('mongodb');
 const assert = require('assert');
 
 // Connection URL
@@ -24,15 +24,21 @@ MongoClient.connect(url, (err, client) => {
   //   console.log(JSON.stringify(result, undefined, 2));
   // })
 
-  db.collection("Users").insertOne({
-    name: 'Ankuj',
-    age: 30,
-    location: 'Delhi'
-  }, (err, result)=> {
-    if (err) {
-      console.log("Unable to insert records");
-    }
-    console.log(JSON.stringify(result.ops, undefined, 2));
+  // db.collection("Users").insertOne({
+  //   name: 'Ankuj',
+  //   age: 30,
+  //   location: 'Delhi'
+  // }, (err, result)=> {
+  //   if (err) {
+  //     console.log("Unable to insert records");
+  //   }
+  //   console.log(JSON.stringify(result.ops, undefined, 2));
+  // })
+
+  db.collection("Todos").find().toArray().then(()=> {
+
+  }, ()=>{
+
   })
 
   client.close();
