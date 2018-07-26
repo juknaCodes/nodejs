@@ -1,73 +1,25 @@
-const mongoose = require('mongoose');
+const express = require('express')
+const bodyParser = require('body-parser')
 
-mongoose.connect('mongodb://localhost:27017/TodoApp');
+var {mongoose} = require('./db/mongoose.js');
+var {Todo} = require('./models/todo.js');
+var {User} = require('./models/user.js');
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-//   var todoSchema = mongoose.Schema({
-//     text: {
-//       type: String,
-//       required: true,
-//       minLength: 1
-//     },
-//     completed: {
-//       type: Boolean,
-//       default: false
-//     },
-//
-//     completedAt: {
-//       type: Number,
-//       default: null
-//     }
-//   });
-//   var Todo = mongoose.model('Todo', todoSchema);
-//   var query = { text: 'Complete course' };
-// // is sent as
-//   let returnedquery = Todo.findOneAndUpdate(query, {
-//       $set: {
-//         completedAt: null
-//        }
-//      }, {
-//        new: true
-//      }, (doc)=> {
-//        console.log(doc);
-//    });
+var app = express();
 
+app.use(bodyParser.json());
 
-  // var newTodo = new Todo({
-  //   text: "Complete course",
-  //   completed: false
-  // })
+app.post("/todos", (req, res)=> {
+  let todo = new Todo({
+    text: req.body.text
+  });
 
-  // var newTodo = new Todo({
-  //   text:'Learn nodejs'
-  // })
-  //
-  // newTodo.save().then((doc)=> {
-  //   console.log(doc)
-  // }, (err)=> {
-  //   console.log(err);
-  // });
-
-});
-
-var userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    minLength: 1,
-    trim: true
-  }
-});
-var User = mongoose.model('User', userSchema);
-
-var newUser = new User({
-  email: "   ankuj2004@gmail.com    "
-});
-
-newUser.save().then((doc)=>{
-  console.log(doc);
-}, (err)=>{
-  console.log(err);
-});
+  todo.save().then((doc)=>{
+    res.send(doc);
+  }, (err)=>{
+    res.status(400).send(err);
+  })
+})
+app.listen(3000, ()=> {
+  console.log("Server started at port 3000");
+})
